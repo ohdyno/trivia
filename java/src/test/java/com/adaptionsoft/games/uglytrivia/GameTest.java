@@ -1,6 +1,7 @@
 package com.adaptionsoft.games.uglytrivia;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -45,6 +46,33 @@ public class GameTest {
       assertEquals("Sports Question " + i, game.sportsQuestions.get(i));
     }
 
+  }
+
+  @Test
+  public void wrongAnswer_alwaysReturnTrue() {
+    game.add("foo");
+    assertTrue(game.wrongAnswer());
+    assertTrue(game.wrongAnswer());
+  }
+
+  @Test
+  public void wrongAnswer_putsCurrentPlayerInsideThePenaltyBox() {
+    game.add("foo");
+    assertEquals("foo", game.currentPlayer());
+    assertFalse(game.inPenaltyBox[game.currentPlayer]);
+    assertTrue(game.wrongAnswer());
+    assertTrue(game.inPenaltyBox[game.currentPlayer]);
+  }
+
+  @Test
+  public void wrongAnswer_changesTheCurrentPlayerToTheNextPlayerAccordingToTheOrderTheyAreAddedWithWrapAround() {
+    game.add("foo");
+    game.add("bar");
+    assertEquals("foo", game.currentPlayer());
+    assertTrue(game.wrongAnswer());
+    assertEquals("bar", game.currentPlayer());
+    assertTrue(game.wrongAnswer());
+    assertEquals("foo", game.currentPlayer());
   }
 
   @Test

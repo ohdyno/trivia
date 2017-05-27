@@ -192,4 +192,8 @@ public class Game {
   private boolean didPlayerWin() {
     return !(purses[currentPlayer] == 6);
   }
+
+  public String currentPlayer() {
+    return (String) this.players.get(currentPlayer);
+  }
 }
