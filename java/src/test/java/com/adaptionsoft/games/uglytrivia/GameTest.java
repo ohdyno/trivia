@@ -49,6 +49,15 @@ public class GameTest {
   }
 
   @Test
+  public void howManyPlayers_returnsTheNumberOfPlayersAddedToTheGameIncludingDuplicates() {
+    game.add("foo");
+    game.add("bar");
+    game.add("baz");
+    game.add("foo");
+    assertEquals(4, game.howManyPlayers());
+  }
+
+  @Test
   public void wrongAnswer_alwaysReturnTrue() {
     game.add("foo");
     assertTrue(game.wrongAnswer());
