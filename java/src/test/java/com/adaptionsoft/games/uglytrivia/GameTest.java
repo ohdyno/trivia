@@ -91,4 +91,48 @@ public class GameTest {
       assertEquals("Rock Question " + i, game.rockQuestions.get(i));
     }
   }
+
+  @Test
+  public void wasCorrectlyAnswered_doesNotIncreaseTheGoldCoinsForTheCurrentPlayerIfThePlayerIsInThePenaltyBox() {
+    game.add("foo");
+    game.inPenaltyBox[game.currentPlayer] = true;
+    int goldCoinsBeforeCorrectAnswer = game.purses[game.currentPlayer];
+    game.wasCorrectlyAnswered();
+    assertEquals(goldCoinsBeforeCorrectAnswer, game.purses[game.currentPlayer]);
+  }
+
+  @Test
+  public void wasCorrectlyAnswered_increasesTheGoldCoinsForTheCurrentPlayerIfThePlayerIsNotInPenaltyBox() {
+    game.add("foo");
+    game.inPenaltyBox[game.currentPlayer] = false;
+    int goldCoinsBeforeCorrectAnswer = game.purses[game.currentPlayer];
+    game.wasCorrectlyAnswered();
+    assertEquals(goldCoinsBeforeCorrectAnswer + 1, game.purses[game.currentPlayer]);
+  }
+
+  @Test
+  public void wasCorrectlyAnswered_increasesTheGoldCoinsForTheCurrentPlayerIfThePLayerIsInThePenaltyBox_andIsGettingOutOfThePenaltyBox() {
+    game.add("foo");
+    game.inPenaltyBox[game.currentPlayer] = true;
+    game.isGettingOutOfPenaltyBox = true;
+    int goldCoinsBeforeCorrectAnswer = game.purses[game.currentPlayer];
+    game.wasCorrectlyAnswered();
+    assertEquals(goldCoinsBeforeCorrectAnswer + 1, game.purses[game.currentPlayer]);
+  }
+
+  @Test
+  public void wasCorrectlyAnswered_advanceToTheNextPlayerRegardlessOfPriorPlayerOrGameConditions() {
+    game.add("foo");
+    game.add("bar");
+    int currentPlayer = game.currentPlayer;
+    game.wasCorrectlyAnswered();
+    assertTrue(currentPlayer != game.currentPlayer);
+  }
+
+  @Test
+  public void wasCorrectlyAnswered_returnsTrueIfTheCurrentPlayerDoesNotHaveSixCoinsAfterIncreasingCoinCount() {
+    game.add("foo");
+    game.purses[game.currentPlayer] = 5;
+    assertFalse(game.wasCorrectlyAnswered());
+  }
 }
