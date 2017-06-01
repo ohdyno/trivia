@@ -139,37 +139,24 @@ public class Game {
 
   public boolean wasCorrectlyAnswered() {
     if (inPenaltyBox[currentPlayer]) {
-      if (isGettingOutOfPenaltyBox) {
-        this.log.println("Answer was correct!!!!");
-        purses[currentPlayer]++;
-        this.log.println(players.get(currentPlayer)
-            + " now has "
-            + purses[currentPlayer]
-            + " Gold Coins.");
-
-        boolean winner = didPlayerWin();
-        advanceToNextPlayer();
-
-        return winner;
-      } else {
+      if (!isGettingOutOfPenaltyBox) {
         advanceToNextPlayer();
         return true;
       }
-
-    } else {
-
-      this.log.println("Answer was correct!!!!");
-      purses[currentPlayer]++;
-      this.log.println(players.get(currentPlayer)
-          + " now has "
-          + purses[currentPlayer]
-          + " Gold Coins.");
-
-      boolean winner = didPlayerWin();
-      advanceToNextPlayer();
-
-      return winner;
     }
+    this.log.println("Answer was correct!!!!");
+    purses[currentPlayer]++;
+    logCurrentPlayerPurseContent();
+    boolean winner = didPlayerWin();
+    advanceToNextPlayer();
+    return winner;
+  }
+
+  private void logCurrentPlayerPurseContent() {
+    this.log.println(players.get(currentPlayer)
+        + " now has "
+        + purses[currentPlayer]
+        + " Gold Coins.");
   }
 
   public boolean wrongAnswer() {
