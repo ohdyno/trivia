@@ -153,13 +153,16 @@ public class GameTest {
   }
 
   @Test
-  public void roll_advancesThePlayerToTheLocationAsDeterminedByTheRollWithTheRollFromOneToSixWithWrapAround() {
+  public void roll_advancesThePlayerToTheLocationAsDeterminedByTheRollWithTheRollFromOneToSix_andLocationCannotBeMoreThanTwelve() {
     game.add("foo");
-    game.places[game.currentPlayer] = 11;
-    int previousLocation = game.places[game.currentPlayer];
-    int advanceLocationsBy = 6;
-    game.roll(advanceLocationsBy);
-    assertEquals((previousLocation + advanceLocationsBy) % 12, game.places[game.currentPlayer]);
+    for (int previousLocation = 0; previousLocation < 12; previousLocation++) {
+      game.places[game.currentPlayer] = previousLocation;
+      for (int advanceLocationsBy = 1; advanceLocationsBy <= 6; advanceLocationsBy++) {
+        game.places[game.currentPlayer] = previousLocation;
+        game.roll(advanceLocationsBy);
+        assertEquals((previousLocation + advanceLocationsBy) % 12, game.places[game.currentPlayer]);
+      }
+    }
   }
 
   @Test
