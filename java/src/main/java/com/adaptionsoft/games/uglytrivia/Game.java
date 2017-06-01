@@ -35,23 +35,19 @@ public class Game {
   }
 
   public boolean isPlayable() {
-    return (howManyPlayers() >= 2);
+    return (players.size() >= 2);
   }
 
   public boolean add(String playerName) {
 
     players.add(playerName);
-    places[howManyPlayers()] = 0;
-    purses[howManyPlayers()] = 0;
-    inPenaltyBox[howManyPlayers()] = false;
+    places[players.size()] = 0;
+    purses[players.size()] = 0;
+    inPenaltyBox[players.size()] = false;
 
     this.log.println(playerName + " was added");
     this.log.println("They are player number " + players.size());
     return true;
-  }
-
-  public int howManyPlayers() {
-    return players.size();
   }
 
   public void roll(int roll) {

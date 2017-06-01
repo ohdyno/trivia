@@ -54,7 +54,7 @@ public class GameTest {
     game.add("bar");
     game.add("baz");
     game.add("foo");
-    assertEquals(4, game.howManyPlayers());
+    assertEquals(4, game.players.size());
   }
 
   @Test
