@@ -59,39 +59,40 @@ public class Game {
     this.log.println("They have rolled a " + roll);
 
     if (inPenaltyBox[currentPlayer]) {
-      if (roll % 2 != 0) {
-        isGettingOutOfPenaltyBox = true;
+      isGettingOutOfPenaltyBox = roll % 2 != 0;
 
+      if (isGettingOutOfPenaltyBox) {
         this.log.println(players.get(currentPlayer) + " is getting out of the penalty box");
-        places[currentPlayer] = places[currentPlayer] + roll;
-        if (places[currentPlayer] > 11) {
-          places[currentPlayer] = places[currentPlayer] - 12;
-        }
+        advanceCurrentPlayerBy(roll);
 
-        this.log.println(players.get(currentPlayer)
-            + "'s new location is "
-            + places[currentPlayer]);
+        logNewLocation();
         this.log.println("The category is " + currentCategory());
         askQuestion();
       } else {
         this.log.println(players.get(currentPlayer) + " is not getting out of the penalty box");
-        isGettingOutOfPenaltyBox = false;
       }
-
     } else {
 
-      places[currentPlayer] = places[currentPlayer] + roll;
-      if (places[currentPlayer] > 11) {
-        places[currentPlayer] = places[currentPlayer] - 12;
-      }
+      advanceCurrentPlayerBy(roll);
 
-      this.log.println(players.get(currentPlayer)
-          + "'s new location is "
-          + places[currentPlayer]);
+      logNewLocation();
       this.log.println("The category is " + currentCategory());
       askQuestion();
     }
 
+  }
+
+  private void logNewLocation() {
+    this.log.println(players.get(currentPlayer)
+        + "'s new location is "
+        + places[currentPlayer]);
+  }
+
+  private void advanceCurrentPlayerBy(int count) {
+    places[currentPlayer] = places[currentPlayer] + count;
+    if (places[currentPlayer] > 11) {
+      places[currentPlayer] = places[currentPlayer] - 12;
+    }
   }
 
   private void askQuestion() {
