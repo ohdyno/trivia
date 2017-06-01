@@ -142,4 +142,43 @@ public class GameTest {
     game.purses[game.currentPlayer] = 5;
     assertFalse(game.wasCorrectlyAnswered());
   }
+
+  @Test
+  public void roll_advancesThePlayerToTheLocationAsDeterminedByTheRoll() {
+    game.add("foo");
+    int previousLocation = game.places[game.currentPlayer];
+    int advanceLocationsBy = 2;
+    game.roll(advanceLocationsBy);
+    assertEquals(previousLocation + advanceLocationsBy, game.places[game.currentPlayer]);
+  }
+
+  @Test
+  public void roll_advancesThePlayerToTheLocationAsDeterminedByTheRollWithTheRollFromOneToSixWithWrapAround() {
+    game.add("foo");
+    game.places[game.currentPlayer] = 11;
+    int previousLocation = game.places[game.currentPlayer];
+    int advanceLocationsBy = 6;
+    game.roll(advanceLocationsBy);
+    assertEquals((previousLocation + advanceLocationsBy) % 12, game.places[game.currentPlayer]);
+  }
+
+  @Test
+  public void roll_advancesThePlayerIfPlayerIsInPenaltyBox_andTheRollIsOdd() {
+    game.add("foo");
+    game.inPenaltyBox[game.currentPlayer] = true;
+    int previousLocation = game.places[game.currentPlayer];
+    int advanceLocationsBy = 3;
+    game.roll(advanceLocationsBy);
+    assertEquals((previousLocation + advanceLocationsBy) % 12, game.places[game.currentPlayer]);
+  }
+
+  @Test
+  public void roll_doesNotAdvanceThePlayerIfPlayerIsInPenaltyBox_andTheRollIsEven() {
+    game.add("foo");
+    game.inPenaltyBox[game.currentPlayer] = true;
+    int previousLocation = game.places[game.currentPlayer];
+    int advanceLocationsBy = 2;
+    game.roll(advanceLocationsBy);
+    assertEquals(previousLocation, game.places[game.currentPlayer]);
+  }
 }
