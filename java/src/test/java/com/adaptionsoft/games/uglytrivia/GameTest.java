@@ -132,6 +132,13 @@ public class GameTest {
   @Test
   public void wasCorrectlyAnswered_returnsTrueIfTheCurrentPlayerDoesNotHaveSixCoinsAfterIncreasingCoinCount() {
     game.add("foo");
+    game.purses[game.currentPlayer] = 3;
+    assertTrue(game.wasCorrectlyAnswered());
+  }
+
+  @Test
+  public void wasCorrectlyAnswered_returnsFalseIfTheCurrentPlayerDoesHaveSixCoinsAfterIncreasingCoinCount() {
+    game.add("foo");
     game.purses[game.currentPlayer] = 5;
     assertFalse(game.wasCorrectlyAnswered());
   }
