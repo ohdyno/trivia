@@ -61,25 +61,21 @@ public class Game {
     if (inPenaltyBox[currentPlayer]) {
       isGettingOutOfPenaltyBox = roll % 2 != 0;
 
-      if (isGettingOutOfPenaltyBox) {
-        this.log.println(players.get(currentPlayer) + " is getting out of the penalty box");
-        advanceCurrentPlayerBy(roll);
-
-        logNewLocation();
-        this.log.println("The category is " + currentCategory());
-        askQuestion();
-      } else {
+      if (!isGettingOutOfPenaltyBox) {
         this.log.println(players.get(currentPlayer) + " is not getting out of the penalty box");
+        return;
+      } else {
+        this.log.println(players.get(currentPlayer) + " is getting out of the penalty box");
       }
-    } else {
-
-      advanceCurrentPlayerBy(roll);
-
-      logNewLocation();
-      this.log.println("The category is " + currentCategory());
-      askQuestion();
     }
+    advanceCurrentPlayerBy(roll);
+    logNewLocation();
+    logCurrentCategory();
+    askQuestion();
+  }
 
+  private void logCurrentCategory() {
+    this.log.println("The category is " + currentCategory());
   }
 
   private void logNewLocation() {
