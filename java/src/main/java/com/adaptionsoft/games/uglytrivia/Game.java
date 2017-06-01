@@ -161,7 +161,7 @@ public class Game {
 
     } else {
 
-      this.log.println("Answer was corrent!!!!");
+      this.log.println("Answer was correct!!!!");
       purses[currentPlayer]++;
       this.log.println(players.get(currentPlayer)
           + " now has "
