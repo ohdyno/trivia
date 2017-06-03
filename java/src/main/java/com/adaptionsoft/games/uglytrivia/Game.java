@@ -3,7 +3,6 @@ package com.adaptionsoft.games.uglytrivia;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Random;
 
 public class Game {
 
@@ -51,8 +50,8 @@ public class Game {
     return true;
   }
 
-  public void roll(Random rand) {
-    roll(rand.nextInt(5) + 1);
+  public void roll(Dice dice) {
+    roll(dice.roll());
   }
 
   public void roll(int roll) {

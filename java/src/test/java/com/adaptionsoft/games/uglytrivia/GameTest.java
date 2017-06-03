@@ -3,6 +3,10 @@ package com.adaptionsoft.games.uglytrivia;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -183,5 +187,15 @@ public class GameTest {
     int advanceLocationsBy = 2;
     game.roll(advanceLocationsBy);
     assertEquals(previousLocation, game.places[game.currentPlayer]);
+  }
+
+  @Test
+  public void roll_takesADiceAndUsesItToDoTheRoll() {
+    game.add("foo");
+    Dice diceShouldBeUsed = mock(Dice.class);
+    given(diceShouldBeUsed.roll()).willReturn(1);
+    game.roll(diceShouldBeUsed);
+    then(diceShouldBeUsed).should(times(1)).roll();
+    then(diceShouldBeUsed).shouldHaveNoMoreInteractions();
   }
 }
