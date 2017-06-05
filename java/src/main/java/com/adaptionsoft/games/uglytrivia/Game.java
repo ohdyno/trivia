@@ -137,7 +137,7 @@ public class Game {
     return "Rock";
   }
 
-  public boolean wasCorrectlyAnswered() {
+  public boolean rewardCorrectAnswer() {
     if (inPenaltyBox[currentPlayer]) {
       if (!isGettingOutOfPenaltyBox) {
         advanceToNextPlayer();
@@ -159,7 +159,7 @@ public class Game {
         + " Gold Coins.");
   }
 
-  public boolean wrongAnswer() {
+  public boolean penalizeWrongAnswer() {
     this.log.println("Question was incorrectly answered");
     this.log.println(players.get(currentPlayer) + " was sent to the penalty box");
     inPenaltyBox[currentPlayer] = true;

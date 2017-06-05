@@ -33,11 +33,7 @@ public class GameRunner {
 
       aGame.roll(randomDice);
 
-      if (rand.nextInt(9) == 7) {
-        notAWinner = aGame.wrongAnswer();
-      } else {
-        notAWinner = aGame.wasCorrectlyAnswered();
-      }
+      notAWinner = rand.nextInt(9) == 7 ? aGame.penalizeWrongAnswer() : aGame.rewardCorrectAnswer();
 
     } while (notAWinner);
   }
