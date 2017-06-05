@@ -1,34 +1,34 @@
 package com.adaptionsoft.games.uglytrivia;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class GameTest {
+class GameTest {
 
   private Game game;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
     game = new Game();
   }
 
   @Test
-  public void add_alwaysReturnTrue() {
+  void add_alwaysReturnTrue() {
     assertTrue(game.add("foo"));
     assertTrue(game.add("foo"));
     assertTrue(game.add("bar"));
   }
 
   @Test
-  public void init_creates50PopQuestions() {
+  void init_creates50PopQuestions() {
     assertEquals(50, game.popQuestions.size());
     for (int i = 0; i < 50; i++) {
       assertEquals("Pop Question " + i, game.popQuestions.get(i));
@@ -36,7 +36,7 @@ public class GameTest {
   }
 
   @Test
-  public void init_creates50ScienceQuestions() {
+  void init_creates50ScienceQuestions() {
     assertEquals(50, game.scienceQuestions.size());
     for (int i = 0; i < 50; i++) {
       assertEquals("Science Question " + i, game.scienceQuestions.get(i));
@@ -44,7 +44,7 @@ public class GameTest {
   }
 
   @Test
-  public void init_creates50SportsQuestions() {
+  void init_creates50SportsQuestions() {
     assertEquals(50, game.sportsQuestions.size());
     for (int i = 0; i < 50; i++) {
       assertEquals("Sports Question " + i, game.sportsQuestions.get(i));
@@ -53,7 +53,7 @@ public class GameTest {
   }
 
   @Test
-  public void howManyPlayers_returnsTheNumberOfPlayersAddedToTheGameIncludingDuplicates() {
+  void howManyPlayers_returnsTheNumberOfPlayersAddedToTheGameIncludingDuplicates() {
     game.add("foo");
     game.add("bar");
     game.add("baz");
@@ -62,34 +62,34 @@ public class GameTest {
   }
 
   @Test
-  public void wrongAnswer_alwaysReturnTrue() {
+  void wrongAnswer_alwaysReturnTrue() {
     game.add("foo");
-    assertTrue(game.wrongAnswer());
-    assertTrue(game.wrongAnswer());
+    assertTrue(game.penalizeWrongAnswer());
+    assertTrue(game.penalizeWrongAnswer());
   }
 
   @Test
-  public void wrongAnswer_putsCurrentPlayerInsideThePenaltyBox() {
+  void wrongAnswer_putsCurrentPlayerInsideThePenaltyBox() {
     game.add("foo");
     assertEquals("foo", game.currentPlayer());
     assertFalse(game.inPenaltyBox[game.currentPlayer]);
-    assertTrue(game.wrongAnswer());
+    assertTrue(game.penalizeWrongAnswer());
     assertTrue(game.inPenaltyBox[game.currentPlayer]);
   }
 
   @Test
-  public void wrongAnswer_changesTheCurrentPlayerToTheNextPlayerAccordingToTheOrderTheyAreAddedWithWrapAround() {
+  void wrongAnswer_changesTheCurrentPlayerToTheNextPlayerAccordingToTheOrderTheyAreAddedWithWrapAround() {
     game.add("foo");
     game.add("bar");
     assertEquals("foo", game.currentPlayer());
-    assertTrue(game.wrongAnswer());
+    assertTrue(game.penalizeWrongAnswer());
     assertEquals("bar", game.currentPlayer());
-    assertTrue(game.wrongAnswer());
+    assertTrue(game.penalizeWrongAnswer());
     assertEquals("foo", game.currentPlayer());
   }
 
   @Test
-  public void init_creates50RockQuestions() {
+  void init_creates50RockQuestions() {
     assertEquals(50, game.rockQuestions.size());
     for (int i = 0; i < 50; i++) {
       assertEquals("Rock Question " + i, game.rockQuestions.get(i));
@@ -97,58 +97,58 @@ public class GameTest {
   }
 
   @Test
-  public void wasCorrectlyAnswered_doesNotIncreaseTheGoldCoinsForTheCurrentPlayerIfThePlayerIsInThePenaltyBox() {
+  void rewardCorrectAnswer_doesNotIncreaseTheGoldCoinsForTheCurrentPlayerIfThePlayerIsInThePenaltyBox() {
     game.add("foo");
     game.inPenaltyBox[game.currentPlayer] = true;
     int goldCoinsBeforeCorrectAnswer = game.purses[game.currentPlayer];
-    game.wasCorrectlyAnswered();
+    game.rewardCorrectAnswer();
     assertEquals(goldCoinsBeforeCorrectAnswer, game.purses[game.currentPlayer]);
   }
 
   @Test
-  public void wasCorrectlyAnswered_increasesTheGoldCoinsForTheCurrentPlayerIfThePlayerIsNotInPenaltyBox() {
+  void rewardCorrectAnswer_increasesTheGoldCoinsForTheCurrentPlayerIfThePlayerIsNotInPenaltyBox() {
     game.add("foo");
     game.inPenaltyBox[game.currentPlayer] = false;
     int goldCoinsBeforeCorrectAnswer = game.purses[game.currentPlayer];
-    game.wasCorrectlyAnswered();
+    game.rewardCorrectAnswer();
     assertEquals(goldCoinsBeforeCorrectAnswer + 1, game.purses[game.currentPlayer]);
   }
 
   @Test
-  public void wasCorrectlyAnswered_increasesTheGoldCoinsForTheCurrentPlayerIfThePLayerIsInThePenaltyBox_andIsGettingOutOfThePenaltyBox() {
+  void rewardCorrectAnswer_increasesTheGoldCoinsForTheCurrentPlayerIfThePLayerIsInThePenaltyBox_andIsGettingOutOfThePenaltyBox() {
     game.add("foo");
     game.inPenaltyBox[game.currentPlayer] = true;
     game.isGettingOutOfPenaltyBox = true;
     int goldCoinsBeforeCorrectAnswer = game.purses[game.currentPlayer];
-    game.wasCorrectlyAnswered();
+    game.rewardCorrectAnswer();
     assertEquals(goldCoinsBeforeCorrectAnswer + 1, game.purses[game.currentPlayer]);
   }
 
   @Test
-  public void wasCorrectlyAnswered_advanceToTheNextPlayerRegardlessOfPriorPlayerOrGameConditions() {
+  void rewardCorrectAnswer_advanceToTheNextPlayerRegardlessOfPriorPlayerOrGameConditions() {
     game.add("foo");
     game.add("bar");
     int currentPlayer = game.currentPlayer;
-    game.wasCorrectlyAnswered();
+    game.rewardCorrectAnswer();
     assertTrue(currentPlayer != game.currentPlayer);
   }
 
   @Test
-  public void wasCorrectlyAnswered_returnsTrueIfTheCurrentPlayerDoesNotHaveSixCoinsAfterIncreasingCoinCount() {
+  void rewardCorrectAnswer_returnsTrueIfTheCurrentPlayerDoesNotHaveSixCoinsAfterIncreasingCoinCount() {
     game.add("foo");
     game.purses[game.currentPlayer] = 3;
-    assertTrue(game.wasCorrectlyAnswered());
+    assertTrue(game.rewardCorrectAnswer());
   }
 
   @Test
-  public void wasCorrectlyAnswered_returnsFalseIfTheCurrentPlayerDoesHaveSixCoinsAfterIncreasingCoinCount() {
+  void rewardCorrectAnswer_returnsFalseIfTheCurrentPlayerDoesHaveSixCoinsAfterIncreasingCoinCount() {
     game.add("foo");
     game.purses[game.currentPlayer] = 5;
-    assertFalse(game.wasCorrectlyAnswered());
+    assertFalse(game.rewardCorrectAnswer());
   }
 
   @Test
-  public void roll_advancesThePlayerToTheLocationAsDeterminedByTheRoll() {
+  void roll_advancesThePlayerToTheLocationAsDeterminedByTheRoll() {
     game.add("foo");
     int previousLocation = game.places[game.currentPlayer];
     int advanceLocationsBy = 2;
@@ -157,7 +157,7 @@ public class GameTest {
   }
 
   @Test
-  public void roll_advancesThePlayerToTheLocationAsDeterminedByTheRollWithTheRollFromOneToSix_andLocationCannotBeMoreThanTwelve() {
+  void roll_advancesThePlayerToTheLocationAsDeterminedByTheRollWithTheRollFromOneToSix_andLocationCannotBeMoreThanTwelve() {
     game.add("foo");
     for (int previousLocation = 0; previousLocation < 12; previousLocation++) {
       game.places[game.currentPlayer] = previousLocation;
@@ -170,7 +170,7 @@ public class GameTest {
   }
 
   @Test
-  public void roll_advancesThePlayerIfPlayerIsInPenaltyBox_andTheRollIsOdd() {
+  void roll_advancesThePlayerIfPlayerIsInPenaltyBox_andTheRollIsOdd() {
     game.add("foo");
     game.inPenaltyBox[game.currentPlayer] = true;
     int previousLocation = game.places[game.currentPlayer];
@@ -180,7 +180,7 @@ public class GameTest {
   }
 
   @Test
-  public void roll_doesNotAdvanceThePlayerIfPlayerIsInPenaltyBox_andTheRollIsEven() {
+  void roll_doesNotAdvanceThePlayerIfPlayerIsInPenaltyBox_andTheRollIsEven() {
     game.add("foo");
     game.inPenaltyBox[game.currentPlayer] = true;
     int previousLocation = game.places[game.currentPlayer];
@@ -190,7 +190,7 @@ public class GameTest {
   }
 
   @Test
-  public void roll_takesADiceAndUsesItToDoTheRoll() {
+  void roll_takesADiceAndUsesItToDoTheRoll() {
     game.add("foo");
     Dice diceShouldBeUsed = mock(Dice.class);
     given(diceShouldBeUsed.roll()).willReturn(1);

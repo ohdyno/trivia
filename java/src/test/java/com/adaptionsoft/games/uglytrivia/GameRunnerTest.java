@@ -1,16 +1,16 @@
 package com.adaptionsoft.games.uglytrivia;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.adaptionsoft.games.trivia.runner.GameRunner;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class GameRunnerTest {
+class GameRunnerTest {
 
   @Test
-  public void run_producesExpectedOutputBasedOnSpecificRandomizerSeed() {
+  void run_producesExpectedOutputBasedOnSpecificRandomizerSeed() {
     String outputFromPreviousGameRun = "Chet was added\n"
         + "They are player number 1\n"
         + "Pat was added\n"
