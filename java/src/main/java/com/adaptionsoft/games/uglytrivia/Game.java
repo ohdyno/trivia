@@ -62,7 +62,8 @@ public class Game {
   public void roll(int roll) {
     this.log.println("They have rolled a " + roll);
 
-    if (inPenaltyBox[currentPlayer] && !shouldCurrentPlayerBeRemovedFromPenaltyBoxBasedOnRoll(roll)) {
+    if (inPenaltyBox[currentPlayer]
+        && !shouldCurrentPlayerBeRemovedFromPenaltyBoxBasedOnRoll(roll)) {
       return;
     }
     advanceCurrentPlayerBy(roll);
@@ -88,9 +89,7 @@ public class Game {
   }
 
   private void logNewLocation() {
-    this.log.println(players.get(currentPlayer)
-        + "'s new location is "
-        + places[currentPlayer]);
+    this.log.println(players.get(currentPlayer) + "'s new location is " + places[currentPlayer]);
   }
 
   private void advanceCurrentPlayerBy(int count) {
@@ -159,10 +158,8 @@ public class Game {
   }
 
   private void logCurrentPlayerPurseContent() {
-    this.log.println(players.get(currentPlayer)
-        + " now has "
-        + purses[currentPlayer]
-        + " Gold Coins.");
+    this.log.println(
+        players.get(currentPlayer) + " now has " + purses[currentPlayer] + " Gold Coins.");
   }
 
   public boolean penalizeWrongAnswer() {

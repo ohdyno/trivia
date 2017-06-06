@@ -49,7 +49,6 @@ class GameTest {
     for (int i = 0; i < 50; i++) {
       assertEquals("Sports Question " + i, game.sportsQuestions.get(i));
     }
-
   }
 
   @Test
@@ -78,7 +77,8 @@ class GameTest {
   }
 
   @Test
-  void wrongAnswer_changesTheCurrentPlayerToTheNextPlayerAccordingToTheOrderTheyAreAddedWithWrapAround() {
+  void
+      wrongAnswer_changesTheCurrentPlayerToTheNextPlayerAccordingToTheOrderTheyAreAddedWithWrapAround() {
     game.add("foo");
     game.add("bar");
     assertEquals("foo", game.currentPlayer());
@@ -97,7 +97,8 @@ class GameTest {
   }
 
   @Test
-  void rewardCorrectAnswer_doesNotIncreaseTheGoldCoinsForTheCurrentPlayerIfThePlayerIsInThePenaltyBox() {
+  void
+      rewardCorrectAnswer_doesNotIncreaseTheGoldCoinsForTheCurrentPlayerIfThePlayerIsInThePenaltyBox() {
     game.add("foo");
     game.inPenaltyBox[game.currentPlayer] = true;
     int goldCoinsBeforeCorrectAnswer = game.purses[game.currentPlayer];
@@ -115,7 +116,8 @@ class GameTest {
   }
 
   @Test
-  void rewardCorrectAnswer_increasesTheGoldCoinsForTheCurrentPlayerIfThePLayerIsInThePenaltyBox_andIsGettingOutOfThePenaltyBox() {
+  void
+      rewardCorrectAnswer_increasesTheGoldCoinsForTheCurrentPlayerIfThePLayerIsInThePenaltyBox_andIsGettingOutOfThePenaltyBox() {
     game.add("foo");
     game.inPenaltyBox[game.currentPlayer] = true;
     game.isGettingOutOfPenaltyBox = true;
@@ -134,14 +136,16 @@ class GameTest {
   }
 
   @Test
-  void rewardCorrectAnswer_returnsTrueIfTheCurrentPlayerDoesNotHaveSixCoinsAfterIncreasingCoinCount() {
+  void
+      rewardCorrectAnswer_returnsTrueIfTheCurrentPlayerDoesNotHaveSixCoinsAfterIncreasingCoinCount() {
     game.add("foo");
     game.purses[game.currentPlayer] = 3;
     assertTrue(game.rewardCorrectAnswer());
   }
 
   @Test
-  void rewardCorrectAnswer_returnsFalseIfTheCurrentPlayerDoesHaveSixCoinsAfterIncreasingCoinCount() {
+  void
+      rewardCorrectAnswer_returnsFalseIfTheCurrentPlayerDoesHaveSixCoinsAfterIncreasingCoinCount() {
     game.add("foo");
     game.purses[game.currentPlayer] = 5;
     assertFalse(game.rewardCorrectAnswer());
@@ -157,7 +161,8 @@ class GameTest {
   }
 
   @Test
-  void roll_advancesThePlayerToTheLocationAsDeterminedByTheRollWithTheRollFromOneToSix_andLocationCannotBeMoreThanTwelve() {
+  void
+      roll_advancesThePlayerToTheLocationAsDeterminedByTheRollWithTheRollFromOneToSix_andLocationCannotBeMoreThanTwelve() {
     game.add("foo");
     for (int previousLocation = 0; previousLocation < 12; previousLocation++) {
       game.places[game.currentPlayer] = previousLocation;

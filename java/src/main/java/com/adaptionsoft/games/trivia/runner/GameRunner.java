@@ -32,5 +32,4 @@ public class GameRunner {
 
     } while (notAWinner);
   }
-
 }
