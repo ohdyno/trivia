@@ -90,10 +90,7 @@ public class Game {
   }
 
   private void advanceCurrentPlayerBy(int count) {
-    places[currentPlayer] = places[currentPlayer] + count;
-    if (places[currentPlayer] > 11) {
-      places[currentPlayer] = places[currentPlayer] - 12;
-    }
+    places[currentPlayer] = (places[currentPlayer] + count) % 12;
   }
 
   private void askQuestion() {
