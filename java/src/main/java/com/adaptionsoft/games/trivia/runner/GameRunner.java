@@ -22,12 +22,7 @@ public class GameRunner {
 
     boolean notAWinner;
 
-    Dice randomDice = new Dice() {
-      @Override
-      public int roll() {
-        return rand.nextInt(5) + 1;
-      }
-    };
+    Dice randomDice = new RandomDice(rand);
 
     do {
 
@@ -37,4 +32,5 @@ public class GameRunner {
 
     } while (notAWinner);
   }
+
 }
