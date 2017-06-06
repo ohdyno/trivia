@@ -3,6 +3,7 @@ package com.adaptionsoft.games.uglytrivia;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Game {
 
@@ -19,6 +20,7 @@ public class Game {
 
   int currentPlayer = 0;
   boolean isGettingOutOfPenaltyBox;
+  private List<Player> participants = new ArrayList<>();
 
   public Game() {
     this(System.out);
@@ -40,13 +42,15 @@ public class Game {
 
   public boolean add(String playerName) {
 
+    Player newPlayer = new Player(playerName, participants.size() + 1);
+    participants.add(newPlayer);
     players.add(playerName);
     places[players.size()] = 0;
     purses[players.size()] = 0;
     inPenaltyBox[players.size()] = false;
 
-    this.log.println(playerName + " was added");
-    this.log.println("They are player number " + players.size());
+    this.log.println(newPlayer.getName() + " was added");
+    this.log.println("They are player number " + newPlayer.getNumber());
     return true;
   }
 
