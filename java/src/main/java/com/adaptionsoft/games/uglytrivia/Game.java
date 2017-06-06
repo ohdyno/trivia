@@ -51,27 +51,32 @@ public class Game {
   }
 
   public void roll(Dice dice) {
+    this.log.println(players.get(currentPlayer) + " is the current player");
     roll(dice.roll());
   }
 
   public void roll(int roll) {
-    this.log.println(players.get(currentPlayer) + " is the current player");
     this.log.println("They have rolled a " + roll);
 
-    if (inPenaltyBox[currentPlayer]) {
-      isGettingOutOfPenaltyBox = roll % 2 != 0;
-
-      if (!isGettingOutOfPenaltyBox) {
-        this.log.println(players.get(currentPlayer) + " is not getting out of the penalty box");
-        return;
-      } else {
-        this.log.println(players.get(currentPlayer) + " is getting out of the penalty box");
-      }
+    if (inPenaltyBox[currentPlayer] && !shouldCurrentPlayerBeRemovedFromPenaltyBoxBasedOnRoll(roll)) {
+      return;
     }
     advanceCurrentPlayerBy(roll);
     logNewLocation();
     logCurrentCategory();
     askQuestion();
+  }
+
+  private boolean shouldCurrentPlayerBeRemovedFromPenaltyBoxBasedOnRoll(int roll) {
+    isGettingOutOfPenaltyBox = roll % 2 != 0;
+
+    if (isGettingOutOfPenaltyBox) {
+      this.log.println(players.get(currentPlayer) + " is getting out of the penalty box");
+    } else {
+      this.log.println(players.get(currentPlayer) + " is not getting out of the penalty box");
+    }
+
+    return isGettingOutOfPenaltyBox;
   }
 
   private void logCurrentCategory() {
