@@ -55,14 +55,14 @@ public class Game {
   }
 
   public void roll(Dice dice) {
-    this.log.println(players.get(currentPlayer) + " is the current player");
+    this.log.println(currentPlayerName() + " is the current player");
     roll(dice.roll());
   }
 
   public void roll(int roll) {
     this.log.println("They have rolled a " + roll);
 
-    if (inPenaltyBox[currentPlayer]
+    if (isCurrentPlayerInPenaltyBox()
         && !shouldCurrentPlayerBeRemovedFromPenaltyBoxBasedOnRoll(roll)) {
       return;
     }
@@ -76,9 +76,9 @@ public class Game {
     isGettingOutOfPenaltyBox = roll % 2 != 0;
 
     if (isGettingOutOfPenaltyBox) {
-      this.log.println(players.get(currentPlayer) + " is getting out of the penalty box");
+      this.log.println(currentPlayerName() + " is getting out of the penalty box");
     } else {
-      this.log.println(players.get(currentPlayer) + " is not getting out of the penalty box");
+      this.log.println(currentPlayerName() + " is not getting out of the penalty box");
     }
 
     return isGettingOutOfPenaltyBox;
@@ -89,7 +89,7 @@ public class Game {
   }
 
   private void logNewLocation() {
-    this.log.println(players.get(currentPlayer) + "'s new location is " + places[currentPlayer]);
+    this.log.println(currentPlayerName() + "'s new location is " + places[currentPlayer]);
   }
 
   private void advanceCurrentPlayerBy(int count) {
@@ -143,7 +143,7 @@ public class Game {
   }
 
   public boolean rewardCorrectAnswer() {
-    if (inPenaltyBox[currentPlayer]) {
+    if (isCurrentPlayerInPenaltyBox()) {
       if (!isGettingOutOfPenaltyBox) {
         advanceToNextPlayer();
         return true;
@@ -157,14 +157,18 @@ public class Game {
     return winner;
   }
 
+  private boolean isCurrentPlayerInPenaltyBox() {
+    return inPenaltyBox[currentPlayer];
+  }
+
   private void logCurrentPlayerPurseContent() {
     this.log.println(
-        players.get(currentPlayer) + " now has " + purses[currentPlayer] + " Gold Coins.");
+        currentPlayerName() + " now has " + purses[currentPlayer] + " Gold Coins.");
   }
 
   public boolean penalizeWrongAnswer() {
     this.log.println("Question was incorrectly answered");
-    this.log.println(players.get(currentPlayer) + " was sent to the penalty box");
+    this.log.println(currentPlayerName() + " was sent to the penalty box");
     inPenaltyBox[currentPlayer] = true;
 
     advanceToNextPlayer();
@@ -175,7 +179,7 @@ public class Game {
     return !(purses[currentPlayer] == 6);
   }
 
-  public String currentPlayer() {
+  public String currentPlayerName() {
     return (String) this.players.get(currentPlayer);
   }
 

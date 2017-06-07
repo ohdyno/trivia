@@ -70,7 +70,7 @@ class GameTest {
   @Test
   void wrongAnswer_putsCurrentPlayerInsideThePenaltyBox() {
     game.add("foo");
-    assertEquals("foo", game.currentPlayer());
+    assertEquals("foo", game.currentPlayerName());
     assertFalse(game.inPenaltyBox[game.currentPlayer]);
     assertTrue(game.penalizeWrongAnswer());
     assertTrue(game.inPenaltyBox[game.currentPlayer]);
@@ -81,11 +81,11 @@ class GameTest {
       wrongAnswer_changesTheCurrentPlayerToTheNextPlayerAccordingToTheOrderTheyAreAddedWithWrapAround() {
     game.add("foo");
     game.add("bar");
-    assertEquals("foo", game.currentPlayer());
+    assertEquals("foo", game.currentPlayerName());
     assertTrue(game.penalizeWrongAnswer());
-    assertEquals("bar", game.currentPlayer());
+    assertEquals("bar", game.currentPlayerName());
     assertTrue(game.penalizeWrongAnswer());
-    assertEquals("foo", game.currentPlayer());
+    assertEquals("foo", game.currentPlayerName());
   }
 
   @Test
