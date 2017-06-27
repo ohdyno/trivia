@@ -12,11 +12,11 @@ public class GameRunner {
     public static void main(String[] args) {
         Random rand = new Random();
         PrintStream output = System.out;
-        run(rand, output);
+        new GameRunner().run(rand, output);
 
     }
 
-    public static void run(Random rand, PrintStream out) {
+    public void run(Random rand, PrintStream out) {
         Game aGame = new Game(out);
 
         aGame.add("Chet");
