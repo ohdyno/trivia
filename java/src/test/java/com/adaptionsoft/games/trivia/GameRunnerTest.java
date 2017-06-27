@@ -1,18 +1,17 @@
 package com.adaptionsoft.games.trivia;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import com.adaptionsoft.games.trivia.runner.GameRunner;
 import org.junit.Test;
 
-import java.io.*;
-import java.nio.ByteBuffer;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Random;
+
+import static org.junit.Assert.assertArrayEquals;
 
 public class GameRunnerTest {
 
@@ -23,7 +22,7 @@ public class GameRunnerTest {
         ByteArrayOutputStream content = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(content);
         subject.run(rand, output);
-        assertArrayEquals(expectedOutput(),content.toByteArray());
+        assertArrayEquals(expectedOutput(), content.toByteArray());
     }
 
     private byte[] expectedOutput() throws IOException {
