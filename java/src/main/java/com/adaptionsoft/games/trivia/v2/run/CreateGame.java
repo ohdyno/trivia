@@ -1,8 +1,8 @@
 package com.adaptionsoft.games.trivia.v2.run;
 
 import com.adaptionsoft.games.trivia.v2.value.Game2;
-import com.adaptionsoft.games.trivia.v2.value.GameEvent;
 import com.adaptionsoft.games.trivia.v2.value.Player;
+import com.adaptionsoft.games.trivia.v2.value.events.NewPlayerEvent;
 
 public class CreateGame {
     private final RecordGameEvents recordGameEvents;
@@ -13,7 +13,7 @@ public class CreateGame {
 
     public Game2 create() {
         Player player = new Player("Chet");
-        recordGameEvents.record(GameEvent.NewPlayer, player);
+        recordGameEvents.record(new NewPlayerEvent(player));
         return new Game2(player);
     }
 }

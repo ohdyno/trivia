@@ -5,6 +5,7 @@ import com.adaptionsoft.games.trivia.v2.run.advance.PlayTrivia;
 import com.adaptionsoft.games.trivia.v2.run.advance.UpdatePlayer;
 import com.adaptionsoft.games.trivia.v2.value.Game2;
 import com.adaptionsoft.games.trivia.v2.value.Player;
+import com.adaptionsoft.games.trivia.v2.value.events.DiceRollEvent;
 import com.adaptionsoft.games.uglytrivia.Dice;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +27,8 @@ public class AdvanceGameTest {
     private UpdatePlayer updatePlayer;
     @Mock
     private PlayTrivia playTrivia;
+    @Mock
+    private RecordGameEvents recordGameEvents;
 
     @Test
     public void whenItAdvancesTheGameByOneTurn_itShouldRollTheDiceForTheCurrentPlayer_UpdatePlayerBasedOnTheRollResult_AskTheQuestion() {
@@ -39,5 +42,6 @@ public class AdvanceGameTest {
         verify(dice).roll();
         verify(updatePlayer).basedOnRoll(roll, player);
         verify(playTrivia).with(player);
+        verify(recordGameEvents).record(new DiceRollEvent(roll));
     }
 }

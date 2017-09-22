@@ -3,8 +3,8 @@ package com.adaptionsoft.games.trivia.v2.runner;
 import com.adaptionsoft.games.trivia.v2.*;
 import com.adaptionsoft.games.trivia.v2.run.*;
 import com.adaptionsoft.games.trivia.v2.value.Game2;
-import com.adaptionsoft.games.trivia.v2.value.GameEvent;
 import com.adaptionsoft.games.trivia.v2.value.Player;
+import com.adaptionsoft.games.trivia.v2.value.events.WinnerDeterminedEvent;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -43,8 +43,7 @@ public class RunGameTest {
         verify(createGame).create();
         verify(advanceGame).byOneTurn(game);
         verify(determineWinner, atLeastOnce()).doesExistIn(game);
-        GameEvent winnerDetermined = GameEvent.WinnerDetermined;
-        verify(recordGameEvents).record(winnerDetermined, player);
+        verify(recordGameEvents).record(new WinnerDeterminedEvent(player));
     }
 
 }
