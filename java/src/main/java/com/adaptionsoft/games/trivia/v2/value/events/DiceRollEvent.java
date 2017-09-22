@@ -1,12 +1,10 @@
 package com.adaptionsoft.games.trivia.v2.value.events;
 
+import lombok.AllArgsConstructor;
 import lombok.Value;
 
 @Value
+@AllArgsConstructor
 public class DiceRollEvent implements GameEvent {
-    private final int roll;
-
-    public DiceRollEvent(int roll) {
-        this.roll = roll;
-    }
+    private int roll;
 }
