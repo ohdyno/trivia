@@ -32,7 +32,7 @@ public class AdvanceGameTest {
 
     @Test
     public void whenItAdvancesTheGameByOneTurn_itShouldRollTheDiceForTheCurrentPlayer_UpdatePlayerBasedOnTheRollResult_AskTheQuestion() {
-        Player player = new Player("Chet");
+        Player player = Player.builder().build();
         Game2 game = new Game2(player);
         int roll = 4;
         when(dice.roll()).thenReturn(roll);

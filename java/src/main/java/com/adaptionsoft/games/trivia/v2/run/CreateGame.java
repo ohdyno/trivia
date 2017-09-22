@@ -12,7 +12,7 @@ public class CreateGame {
     }
 
     public Game2 create() {
-        Player player = new Player("Chet");
+        Player player = Player.builder().build();
         recordGameEvents.record(new NewPlayerEvent(player));
         return new Game2(player);
     }

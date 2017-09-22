@@ -33,7 +33,7 @@ public class RunGameTest {
 
     @Test
     public void oneTurnGameWithWinner() {
-        Player player = new Player("player name");
+        Player player = Player.builder().build();
         Game2 game = new Game2(player);
         when(createGame.create()).thenReturn(game);
         when(determineWinner.doesExistIn(game)).thenReturn(Optional.of(player));

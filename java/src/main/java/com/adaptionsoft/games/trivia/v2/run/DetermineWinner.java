@@ -7,6 +7,10 @@ import java.util.Optional;
 
 public class DetermineWinner {
     public Optional<Player> doesExistIn(Game2 game) {
-        return null;
+        if (game.currentPlayer.getCoins() == 6) {
+            return Optional.of(game.currentPlayer);
+        }
+
+        return Optional.empty();
     }
 }
