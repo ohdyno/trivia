@@ -1,34 +1,35 @@
 package com.adaptionsoft.games.uglytrivia;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-class GameTest {
+public class GameTest {
 
   private Game game;
 
-  @BeforeEach
-  void setUp() throws Exception {
+  @Before
+  public void setUp() throws Exception {
     game = new Game();
   }
 
   @Test
-  void add_alwaysReturnTrue() {
+  public void add_alwaysReturnTrue() {
     assertTrue(game.add("foo"));
     assertTrue(game.add("foo"));
     assertTrue(game.add("bar"));
   }
 
   @Test
-  void init_creates50PopQuestions() {
+  public void init_creates50PopQuestions() {
     assertEquals(50, game.popQuestions.size());
     for (int i = 0; i < 50; i++) {
       assertEquals("Pop Question " + i, game.popQuestions.get(i));
@@ -36,7 +37,7 @@ class GameTest {
   }
 
   @Test
-  void init_creates50ScienceQuestions() {
+  public void init_creates50ScienceQuestions() {
     assertEquals(50, game.scienceQuestions.size());
     for (int i = 0; i < 50; i++) {
       assertEquals("Science Question " + i, game.scienceQuestions.get(i));
@@ -44,7 +45,7 @@ class GameTest {
   }
 
   @Test
-  void init_creates50SportsQuestions() {
+  public void init_creates50SportsQuestions() {
     assertEquals(50, game.sportsQuestions.size());
     for (int i = 0; i < 50; i++) {
       assertEquals("Sports Question " + i, game.sportsQuestions.get(i));
@@ -52,7 +53,7 @@ class GameTest {
   }
 
   @Test
-  void howManyPlayers_returnsTheNumberOfPlayersAddedToTheGameIncludingDuplicates() {
+  public void howManyPlayers_returnsTheNumberOfPlayersAddedToTheGameIncludingDuplicates() {
     game.add("foo");
     game.add("bar");
     game.add("baz");
@@ -61,14 +62,14 @@ class GameTest {
   }
 
   @Test
-  void wrongAnswer_alwaysReturnTrue() {
+  public void wrongAnswer_alwaysReturnTrue() {
     game.add("foo");
     assertTrue(game.penalizeWrongAnswer());
     assertTrue(game.penalizeWrongAnswer());
   }
 
   @Test
-  void wrongAnswer_putsCurrentPlayerInsideThePenaltyBox() {
+  public void wrongAnswer_putsCurrentPlayerInsideThePenaltyBox() {
     game.add("foo");
     assertEquals("foo", game.currentPlayerName());
     assertFalse(game.inPenaltyBox[game.currentPlayer]);
@@ -77,7 +78,7 @@ class GameTest {
   }
 
   @Test
-  void
+  public void
       wrongAnswer_changesTheCurrentPlayerToTheNextPlayerAccordingToTheOrderTheyAreAddedWithWrapAround() {
     game.add("foo");
     game.add("bar");
@@ -89,7 +90,7 @@ class GameTest {
   }
 
   @Test
-  void init_creates50RockQuestions() {
+  public void init_creates50RockQuestions() {
     assertEquals(50, game.rockQuestions.size());
     for (int i = 0; i < 50; i++) {
       assertEquals("Rock Question " + i, game.rockQuestions.get(i));
@@ -97,7 +98,7 @@ class GameTest {
   }
 
   @Test
-  void
+  public void
       rewardCorrectAnswer_doesNotIncreaseTheGoldCoinsForTheCurrentPlayerIfThePlayerIsInThePenaltyBox() {
     game.add("foo");
     game.inPenaltyBox[game.currentPlayer] = true;
@@ -107,7 +108,7 @@ class GameTest {
   }
 
   @Test
-  void rewardCorrectAnswer_increasesTheGoldCoinsForTheCurrentPlayerIfThePlayerIsNotInPenaltyBox() {
+  public void rewardCorrectAnswer_increasesTheGoldCoinsForTheCurrentPlayerIfThePlayerIsNotInPenaltyBox() {
     game.add("foo");
     game.inPenaltyBox[game.currentPlayer] = false;
     int goldCoinsBeforeCorrectAnswer = game.purses[game.currentPlayer];
@@ -116,7 +117,7 @@ class GameTest {
   }
 
   @Test
-  void
+  public void
       rewardCorrectAnswer_increasesTheGoldCoinsForTheCurrentPlayerIfThePLayerIsInThePenaltyBox_andIsGettingOutOfThePenaltyBox() {
     game.add("foo");
     game.inPenaltyBox[game.currentPlayer] = true;
@@ -127,7 +128,7 @@ class GameTest {
   }
 
   @Test
-  void rewardCorrectAnswer_advanceToTheNextPlayerRegardlessOfPriorPlayerOrGameConditions() {
+  public void rewardCorrectAnswer_advanceToTheNextPlayerRegardlessOfPriorPlayerOrGameConditions() {
     game.add("foo");
     game.add("bar");
     int currentPlayer = game.currentPlayer;
@@ -136,7 +137,7 @@ class GameTest {
   }
 
   @Test
-  void
+  public void
       rewardCorrectAnswer_returnsTrueIfTheCurrentPlayerDoesNotHaveSixCoinsAfterIncreasingCoinCount() {
     game.add("foo");
     game.purses[game.currentPlayer] = 3;
@@ -144,7 +145,7 @@ class GameTest {
   }
 
   @Test
-  void
+  public void
       rewardCorrectAnswer_returnsFalseIfTheCurrentPlayerDoesHaveSixCoinsAfterIncreasingCoinCount() {
     game.add("foo");
     game.purses[game.currentPlayer] = 5;
@@ -152,7 +153,7 @@ class GameTest {
   }
 
   @Test
-  void roll_advancesThePlayerToTheLocationAsDeterminedByTheRoll() {
+  public void roll_advancesThePlayerToTheLocationAsDeterminedByTheRoll() {
     game.add("foo");
     int previousLocation = game.places[game.currentPlayer];
     int advanceLocationsBy = 2;
@@ -161,7 +162,7 @@ class GameTest {
   }
 
   @Test
-  void
+  public void
       roll_advancesThePlayerToTheLocationAsDeterminedByTheRollWithTheRollFromOneToSix_andLocationCannotBeMoreThanTwelve() {
     game.add("foo");
     for (int previousLocation = 0; previousLocation < 12; previousLocation++) {
@@ -175,7 +176,7 @@ class GameTest {
   }
 
   @Test
-  void roll_advancesThePlayerIfPlayerIsInPenaltyBox_andTheRollIsOdd() {
+  public void roll_advancesThePlayerIfPlayerIsInPenaltyBox_andTheRollIsOdd() {
     game.add("foo");
     game.inPenaltyBox[game.currentPlayer] = true;
     int previousLocation = game.places[game.currentPlayer];
@@ -185,7 +186,7 @@ class GameTest {
   }
 
   @Test
-  void roll_doesNotAdvanceThePlayerIfPlayerIsInPenaltyBox_andTheRollIsEven() {
+  public void roll_doesNotAdvanceThePlayerIfPlayerIsInPenaltyBox_andTheRollIsEven() {
     game.add("foo");
     game.inPenaltyBox[game.currentPlayer] = true;
     int previousLocation = game.places[game.currentPlayer];
@@ -195,7 +196,7 @@ class GameTest {
   }
 
   @Test
-  void roll_takesADiceAndUsesItToDoTheRoll() {
+  public void roll_takesADiceAndUsesItToDoTheRoll() {
     game.add("foo");
     Dice diceShouldBeUsed = mock(Dice.class);
     given(diceShouldBeUsed.roll()).willReturn(1);
